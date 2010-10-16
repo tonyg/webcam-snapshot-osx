@@ -76,6 +76,7 @@ public class Main {
 	String outputfile = args[2];
 	String tempfile = args[3];
 	devicePattern = args[4];
+	int roughFps = (args.length > 5) ? Integer.parseInt(args[5]) : 10;
 
 	java.util.Iterator iter = buildFrameIterator(width, height);
 
@@ -88,6 +89,7 @@ public class Main {
 	    File t = new File(tempfile);
 	    ImageIO.write(i, "png", t);
 	    t.renameTo(o);
+	    Thread.sleep((long) (1000.0 / roughFps));
 	}
     }
 
