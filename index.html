@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <title>Frame viewer</title>
+  </head>
+  <body>
+    <img id="i1" src="build/dist/webcam.png">
+    <img id="i2" src="build/dist/frame2.bmp">
+    <script>
+      function reloadImg(id) {
+	 var obj = document.getElementById(id);
+	 var src = obj.src;
+	 var pos = src.indexOf('?');
+	 if (pos >= 0) {
+	    src = src.substr(0, pos);
+	 }
+	 var date = new Date();
+	 obj.src = src + '?v=' + date.getTime();
+	 return false;
+      }
+      function reload() {
+         reloadImg("i1");
+         reloadImg("i2");
+      }
+      setInterval(reload, 200);
+    </script>
+  </body>
+</html>

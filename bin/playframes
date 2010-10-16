@@ -1,0 +1,3 @@
+#!/bin/sh
+(while true; do sox -r 44100 -c 2 -2 -s frame.wav frame.raw; cat frame.raw; done) \
+    | play -r 44100 -c 2 -2 -s -t raw -

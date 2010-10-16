@@ -1,0 +1,72 @@
+#!/bin/bash
+set -x
+
+INPUTFILE=webcam.png
+REFERENCEFILE=frame.png
+
+THRESHOLD_VALUE=50000
+THRESHOLD_VALUE=32768
+#THRESHOLD_VALUE=27000
+#THRESHOLD_VALUE=20000
+
+THRESHOLD=
+THRESHOLD="-black-threshold $THRESHOLD_VALUE"
+#THRESHOLD="-threshold $THRESHOLD_VALUE"
+
+CHARCOAL_WIDTH=1
+#CHARCOAL_WIDTH=3
+
+#LOG_BASE=1
+#LOG_BASE=1.3
+LOG_BASE=2
+
+MIN_FREQ=10
+MIN_FREQ=20
+#MIN_FREQ=55
+
+#MAX_FREQ=22000
+MAX_FREQ=14000
+#MAX_FREQ=7000
+#MAX_FREQ=4000
+
+PIXELS_PER_SECOND=320
+PIXELS_PER_SECOND=160
+#PIXELS_PER_SECOND=300
+PIXELS_PER_SECOND=120
+#PIXELS_PER_SECOND=60
+#PIXELS_PER_SECOND=30
+
+
+while [ ! -e $INPUTFILE ]; do sleep 0.2; done
+convert \
+    -charcoal $CHARCOAL_WIDTH \
+    -negate \
+    -normalize \
+    $THRESHOLD \
+    $INPUTFILE frame.bmp
+convert frame.bmp -stroke red \
+    -draw 'line 280,0 280,240' \
+    -draw 'line 200,0 200,240' \
+    -draw 'line 120,0 120,240' \
+    -draw 'line  40,0  40,240' \
+    \
+    -draw 'line 0,240 320,240' \
+    -draw 'line 0,215 320,215' \
+    -draw 'line 0,189 320,189' \
+    -draw 'line 0,164 320,164' \
+    -draw 'line 0,138 320,138' \
+    -draw 'line 0,113 320,113' \
+    -draw 'line 0,88 320,88' \
+    -draw 'line 0,62 320,62' \
+    -draw 'line 0,37 320,37' \
+    -draw 'line 0,11 320,11' \
+    frame2.bmp
+mv $INPUTFILE $REFERENCEFILE
+arss frame.bmp frame.wav.tmp \
+    --log-base $LOG_BASE \
+    --sine \
+    --min-freq $MIN_FREQ \
+    --max-freq $MAX_FREQ \
+    --pps $PIXELS_PER_SECOND \
+    -f 16 --sample-rate 44100
+mv frame.wav.tmp frame.wav

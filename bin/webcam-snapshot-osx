@@ -1,0 +1,3 @@
+#!/bin/sh
+exec java -server -cp $(for d in *.jar; do echo "$d":; done) \
+    leastfixedpoint.webcamsnapshot.osx.Main "$@"
