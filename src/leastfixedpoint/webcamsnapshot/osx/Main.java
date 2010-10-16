@@ -6,21 +6,6 @@ package leastfixedpoint.webcamsnapshot.osx;
 
 // Based on camcapture for OSX - http://github.com/tonyg/camstream
 
-import quicktime.QTSession;
-import quicktime.QTException;
-import quicktime.io.QTFile;
-import quicktime.qd.QDRect;
-import quicktime.qd.QDGraphics;
-import quicktime.std.StdQTException;
-import quicktime.std.sg.SequenceGrabber;
-import quicktime.std.sg.SGVideoChannel;
-import quicktime.std.sg.SGDeviceList;
-import quicktime.std.sg.SGDeviceName;
-import quicktime.util.RawEncodedImage;
-
-import java.io.File;
-import java.io.IOException;
-
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
@@ -28,13 +13,25 @@ import java.awt.image.DataBufferInt;
 import java.awt.image.DirectColorModel;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
+import java.io.File;
 
 import javax.imageio.ImageIO;
-
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.ImageIcon;
 
+import quicktime.QTException;
+import quicktime.QTSession;
+import quicktime.io.QTFile;
+import quicktime.qd.QDGraphics;
+import quicktime.qd.QDRect;
+import quicktime.std.sg.SGDeviceList;
+import quicktime.std.sg.SGDeviceName;
+import quicktime.std.sg.SGVideoChannel;
+import quicktime.std.sg.SequenceGrabber;
+import quicktime.util.RawEncodedImage;
+
+@SuppressWarnings("deprecation")
 public class Main {
     public static void main (String args[]) {
 	try {
@@ -136,7 +133,6 @@ public class Main {
 							  null);
 	image = new BufferedImage(colorModel, raster, false, null);
 
-	QTFile movieFile = new QTFile(new java.io.File("NoFile"));
 	grabber.setDataOutput( null, quicktime.std.StdQTConstants.seqGrabDontMakeMovie);
 	grabber.prepare(true, true);
 	grabber.startRecord();
